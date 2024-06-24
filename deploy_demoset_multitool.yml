@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-multitool
+  namespace: netology
+  labels:
+    app: ds-multitool
+spec:
+  selector:
+    matchLabels:
+      app: ds-multitool
+  template:
+    metadata:
+      labels:
+        app: ds-multitool
+    spec:
+      containers:
+      - name: multitool
+        image: wbitt/network-multitool
+        volumeMounts:
+        - name: volume
+          mountPath: /input/logs
+        ports:
+        - containerPort: 8080
+      volumes:
+      - name: volume
+        hostPath:
+          path: /var/log/syslog
